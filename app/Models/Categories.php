@@ -6,5 +6,16 @@ use Illuminate\Database\Eloquent\Model;
 
 class Categories extends Model
 {
-    //
+    use HasFactory;  
+   protected $table = 'categories';
+   protected $fillable = [
+      'name',
+      'image',
+   ];
+   protected $appends = ['image_url'];
+   
+   public function getImageUrlAttribute()
+   {
+      return $this->image ? asset('storage/' . $this->image) : null;
+   }
 }

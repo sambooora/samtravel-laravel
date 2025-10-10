@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('code', 255); //required dari xendit
             $table->string('external_id', 255); //required dari xendit
-             $table->string('validation_token', 128)->nullable()->after('external_id'); //digunakan untuk memvalidasi token dari table transaction
+            $table->string('validation_token', 128)->nullable()->after('external_id'); //digunakan untuk memvalidasi token dari table transaction
             $table->string('checkout_link', 255); //required dari xendit
             $table->string('payment_method', 255)->nullable(); //required dari xendit
             $table->string('payment_status', 255)->nullable(); //required dari xendit

@@ -6,5 +6,30 @@ use Illuminate\Database\Eloquent\Model;
 
 class Ticket extends Model
 {
-    //
+    use HasFactory;
+    protected $table = 'ticket';
+   protected $fillable = [
+     'ticket_code',
+     'name',
+     'ticket_category_id',
+     'price_per_pack',
+     'qty',
+   ];
+
+   public function category()
+   {
+      return $this->belongsTo(TicketCategories::class, 'ticket_category_id');
+   }
+
+   public function location()
+   {
+      return $this->belongsToMany(Locations::class, 'location_ticket', 'ticket_id', 'location_id')
+      ->withPivot('ticket_category_id')
+      ->withTimestamps();
+   }
+
+   public function ticketCategory()
+   {
+      return $this->belongsTo(TicketCategories::class, 'ticket_category_id');
+   }
 }
