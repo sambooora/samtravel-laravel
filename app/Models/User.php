@@ -11,7 +11,7 @@ use Spatie\Permission\Traits\HasRoles; //import thread spatie
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable, hasRole ;
+    use HasFactory, Notifiable, HasRoles;
 
     /**
      * The attributes that are mass assignable.
@@ -47,9 +47,11 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];  
     }
-    public function getUserPermission()
+    public function getUserPermissions()
     {
-        return $this->getAllPermission().mapWithKey(fn($permission) => [$permission['name'] => true]); 
-        //ketika user login akan mendapatkan rolenya apa 
+        return $this->getAllPermissions()
+            ->pluck('name')
+            ->mapWithKeys(fn ($name) => [$name => true])
+            ->toArray();
     }
 }
